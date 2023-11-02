@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.rayma'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("net.dv8tion:JDA:5.0.0-beta.17") {
+        exclude module: 'opus-java'
+    }
+    implementation("ch.qos.logback:logback-classic:1.4.8")
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "dev.rayma.Launcher"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
